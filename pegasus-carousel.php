@@ -46,6 +46,8 @@ Domain Path: /languages
 			<h1>Shortcode Usage</h1>
 			
 			<p>Logo Slider Usage: <pre>[logo_slider the_query="post_type=logo_slider&showposts=100" ]</pre></p>
+			<p>Testimonial Slider Usage: <pre>[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]</pre></p>
+			
 			
 			<p style="color:red;">MAKE SURE YOU DO NOT HAVE ANY RETURNS OR <?php echo htmlspecialchars('<br>'); ?>'s IN YOUR SHORTCODES, OTHERWISE IT WILL NOT WORK CORRECTLY</p>
 		
@@ -380,6 +382,8 @@ Domain Path: /languages
 
 		$a = shortcode_atts( array(
 			"image" => '',
+			"type" => '',
+			"class" => ''
 		), $atts );
 		
 		// Defaults
@@ -432,7 +436,8 @@ Domain Path: /languages
 					}
 					$output .= "</div>";
 				} 
-				$output .= '<div class="simple"><blockquote>';
+				
+				$output .= "<div class='{$a['type']} {$a['class']}'><blockquote>";
 				$output .= "<p class='post-content'>";
 				if(isset($temp_excerpt)) {
 					//$temporary_excerpt = substr(strip_tags($temp_excerpt), 0, 150);
