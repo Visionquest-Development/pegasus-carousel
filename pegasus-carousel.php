@@ -317,7 +317,7 @@ Domain Path: /languages
 		
 		// Defaults
 		extract(shortcode_atts(array(
-			"the_query" => 'showposts=99&post_type=portfolio',
+			"the_query" => '',
 		), $atts));
 
 		// de-funkify query
