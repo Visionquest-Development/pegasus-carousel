@@ -327,7 +327,7 @@ Domain Path: /languages
 		if ( '' === $the_query || null === $the_query || empty( $the_query ) ) {
 			$the_query = 'post_type=logo_slider&showposts=100';
 		} else {
-			$the_query = $the_query
+			$the_query = $the_query;
 		}
 		
 		// query is made               
