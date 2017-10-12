@@ -46,6 +46,7 @@ Domain Path: /languages
 			<h1>Shortcode Usage</h1>
 			
 			<p>Logo Slider Usage: <pre>[logo_slider]</pre></p>
+			<p>Logo Slider Usage: <pre>[logo_slider the_query="post_type=logo_slider&showposts=100&order_by=title&order=ASC"]</pre></p>
 			<p>Testimonial Slider Usage: <pre>[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]</pre></p>
 			
 			
@@ -321,19 +322,26 @@ Domain Path: /languages
 		), $atts));
 
 		// de-funkify query
-		$the_query = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $the_query);
-		$the_query = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $the_query);
+		//$the_query = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $the_query);
+		//$the_query = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $the_query);
+
+		$the_query = preg_replace_callback('~&#x0*([0-9a-f]+);~', function($matches){
+			return chr( dechex( $matches[1] ) );
+		}, $the_query);
+
+		$the_query = preg_replace_callback('~&#0*([0-9]+);~', function($matches){
+			return chr( $matches[1] );
+		}, $the_query);
 		
 		if ( '' === $the_query || null === $the_query || empty( $the_query ) ) {
 			$the_query = 'post_type=logo_slider&showposts=100';
-		} else {
-			$the_query = $the_query
 		}
 		
 		// query is made               
 		query_posts( $the_query );
 
 		// Reset and setup variables
+		global $post;
 		$output = '';
 		//$temp_title = '';
 		//$temp_link = '';
