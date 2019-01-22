@@ -19,10 +19,35 @@ Domain Path: /languages
 		exit;
 	}
 
-	function pegasus_carousel_menu_item() {
-		add_menu_page("Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99);
-		add_submenu_page("pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+	global $theme;
+
+	$theme = wp_get_theme();
+
+	$theme_template = $theme->get_template();
+	$theme_stylesheet = $theme->get_stylesheet();
+	$theme_template_dir = $theme->get_template_directory_uri();
+	$theme_stylesheet_dir = $theme->get_stylesheet_directory_uri();
+
+	function pegasus_carousel_submenu_item() {
+		//add_menu_page("Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99);
+
+		//string $parent_slug, string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = ''
+		add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
 	}
+
+	function pegasus_carousel_menu_item() {
+		add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99 );
+		add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+	}
+
+	if( 'pegasus-child' === $theme_template || 'pegasus' === $theme_template || 'pegasus-child' === $theme_stylesheet || 'pegasus' === $theme_stylesheet ) {
+		//do nothing
+		//add_action("admin_menu", "pegasus_carousel_submenu_item");
+	} else {
+		//stuff
+		//add_action("admin_menu", "pegasus_carousel_menu_item");
+	}
+
 	add_action("admin_menu", "pegasus_carousel_menu_item");
 
 	function pegasus_carousel_plugin_settings_page() { ?>
@@ -87,9 +112,11 @@ Domain Path: /languages
 	
 	function pegasus_carousel_plugin_styles() {
 		
-		wp_enqueue_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
-		wp_enqueue_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
-		
+		//wp_enqueue_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
+		//wp_enqueue_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
+		wp_register_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
+		wp_register_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
+
 	}
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_styles' );
 	
@@ -98,9 +125,12 @@ Domain Path: /languages
 	*/
 	function pegasus_carousel_plugin_js() {
 		
-		wp_enqueue_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, true );
-		wp_enqueue_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, true );
-		wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
+		//wp_enqueue_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, true );
+		//wp_enqueue_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, true );
+		//wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
+		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, 'all' );
+		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, 'all' );
+		wp_register_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, 'all' );
 		
 	} //end function
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_js' );
@@ -382,6 +412,13 @@ Domain Path: /languages
 		endif;
 
 		wp_reset_query();
+
+		wp_enqueue_style( 'slick-css' );
+		wp_enqueue_style( 'slick-theme-css' );
+		wp_enqueue_script( 'slick-js' );
+		wp_enqueue_script( 'match-height-js' );
+		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
+
 		return '<section class="center logo-slider slider">' . $output . '</section>';
 	   
 	}
@@ -477,6 +514,13 @@ Domain Path: /languages
 		endif;
 
 		wp_reset_query();
+
+		wp_enqueue_style( 'slick-css' );
+		wp_enqueue_style( 'slick-theme-css' );
+		wp_enqueue_script( 'slick-js' );
+		wp_enqueue_script( 'match-height-js' );
+		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
+
 		return '<section role="complementary" class="simple white-back testimonial-slider quotes no-fouc">' . $output . '</section>';
 	   
 	}
