@@ -32,12 +32,12 @@ Domain Path: /languages
 		//add_menu_page("Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99);
 
 		//string $parent_slug, string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = ''
-		add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+		//add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
 	}
 
 	function pegasus_carousel_menu_item() {
-		add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99 );
-		add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+		//add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99 );
+		//add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
 	}
 
 	if( 'pegasus-child' === $theme_template || 'pegasus' === $theme_template || 'pegasus-child' === $theme_stylesheet || 'pegasus' === $theme_stylesheet ) {
