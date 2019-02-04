@@ -443,8 +443,16 @@ Domain Path: /languages
 		), $atts));
 
 		// de-funkify query
-		$the_query = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $the_query);
-		$the_query = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $the_query);
+		//$the_query = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $the_query);
+		//$the_query = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $the_query);
+
+		$the_query = preg_replace_callback('~&#x0*([0-9a-f]+);~', function($matches){
+			return chr( dechex( $matches[1] ) );
+		}, $the_query);
+
+		$the_query = preg_replace_callback('~&#0*([0-9]+);~', function($matches){
+			return chr( $matches[1] );
+		}, $the_query);
 
 		// query is made               
 		query_posts($the_query);
@@ -457,8 +465,8 @@ Domain Path: /languages
 		$temp_pic = '';
 		$temp_content = '';
 		$the_id = '';
-		
-		
+
+		global $post;
 		
 			//$color_chk = "{$a['bkg_color']}";
 			//if ($color_chk) { $output .= "<li style='background: {$a['bkg_color']}; '>"; }else{ $output .= "<li>"; }
