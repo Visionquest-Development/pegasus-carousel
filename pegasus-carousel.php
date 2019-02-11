@@ -152,16 +152,16 @@ Domain Path: /languages
 			================================*/
 		
 			$review_labels = array(
-				'name' => _x('Testimonials', 'post type general name', 'octane-bootstrap'),
-				'singular_name' => _x('Testimonials', 'post type singular name', 'octane-bootstrap'),
-				'add_new' => _x('Add New', 'testimonial', 'octane-bootstrap'),
-				'add_new_item' => __('Add New Testimonials', 'octane-bootstrap'),
-				'edit_item' => __('Edit Testimonial', 'octane-bootstrap'),
-				'new_item' => __('New Testimonial', 'octane-bootstrap'),
-				'view_item' => __('View Testimonials', 'octane-bootstrap'),
-				'search_items' => __('Search Testimonials', 'octane-bootstrap'),
-				'not_found' =>  __('No testimonial found', 'octane-bootstrap'),
-				'not_found_in_trash' => __('No testimonial found in Trash', 'octane-bootstrap'),
+				'name' => _x('Testimonials', 'post type general name', 'pegasus-bootstrap'),
+				'singular_name' => _x('Testimonials', 'post type singular name', 'pegasus-bootstrap'),
+				'add_new' => _x('Add New', 'testimonial', 'pegasus-bootstrap'),
+				'add_new_item' => __('Add New Testimonials', 'pegasus-bootstrap'),
+				'edit_item' => __('Edit Testimonial', 'pegasus-bootstrap'),
+				'new_item' => __('New Testimonial', 'pegasus-bootstrap'),
+				'view_item' => __('View Testimonials', 'pegasus-bootstrap'),
+				'search_items' => __('Search Testimonials', 'pegasus-bootstrap'),
+				'not_found' =>  __('No testimonial found', 'pegasus-bootstrap'),
+				'not_found_in_trash' => __('No testimonial found in Trash', 'pegasus-bootstrap'),
 				'parent_item_colon' => '',
 				'menu_name' => 'Testimonial'
 			);
@@ -199,16 +199,16 @@ Domain Path: /languages
 			============================*/
 			
 			$logo_slider_labels = array(
-				'name' => _x('Logos', 'logo slider general name', 'octane-bootstrap'),
-				'singular_name' => _x('Logo', 'logo slider singular name', 'octane-bootstrap'),
-				'add_new' => _x('Add New', 'logo', 'octane-bootstrap'),
-				'add_new_item' => __('Add New Logo', 'octane-bootstrap'),
-				'edit_item' => __('Edit Logo', 'octane-bootstrap'),
-				'new_item' => __('New Logo', 'octane-bootstrap'),
-				'view_item' => __('View Logo', 'octane-bootstrap'),
-				'search_items' => __('Search Logo', 'octane-bootstrap'),
-				'not_found' =>  __('No logo found', 'octane-bootstrap'),
-				'not_found_in_trash' => __('No logo found in Trash', 'octane-bootstrap'),
+				'name' => _x('Logos', 'logo slider general name', 'pegasus-bootstrap'),
+				'singular_name' => _x('Logo', 'logo slider singular name', 'pegasus-bootstrap'),
+				'add_new' => _x('Add New', 'logo', 'pegasus-bootstrap'),
+				'add_new_item' => __('Add New Logo', 'pegasus-bootstrap'),
+				'edit_item' => __('Edit Logo', 'pegasus-bootstrap'),
+				'new_item' => __('New Logo', 'pegasus-bootstrap'),
+				'view_item' => __('View Logo', 'pegasus-bootstrap'),
+				'search_items' => __('Search Logo', 'pegasus-bootstrap'),
+				'not_found' =>  __('No logo found', 'pegasus-bootstrap'),
+				'not_found_in_trash' => __('No logo found in Trash', 'pegasus-bootstrap'),
 				'parent_item_colon' => '',
 				'menu_name' => 'Logo Slider'
 			);
