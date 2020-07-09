@@ -66,7 +66,9 @@ Domain Path: /languages
 	<?php
 	}
 	
-	function pegasus_carousel_plugin_shortcode_settings_page() { ?>
+	function pegasus_carousel_plugin_shortcode_settings_page() {
+		/*
+		?>
 		<div class="wrap pegasus-wrap">
 			<h1>Shortcode Usage</h1>
 			
@@ -79,6 +81,7 @@ Domain Path: /languages
 		
 		</div>
 		<?php
+		*/
 	}
 	
 	function enable_logo_slider_cpt() { ?>
@@ -349,11 +352,42 @@ Domain Path: /languages
 		// Defaults
 		extract(shortcode_atts(array(
 			"the_query" => '',
+			"display_caption" => '',
+			"display_img_link" => '',
+			"is_external" => ''
 		), $atts));
 
 		// de-funkify query
 		//$the_query = preg_replace('~&#x0*([0-9a-f]+);~ei', 'chr(hexdec("\\1"))', $the_query);
 		//$the_query = preg_replace('~&#0*([0-9]+);~e', 'chr(\\1)', $the_query);
+
+		if ( '' !== $display_caption ) {
+			if( "true" === $display_caption || true === $display_caption ) {
+				$display_caption = true;
+			}
+			if( "false" === $display_caption || false === $display_caption ) {
+				$display_caption = false;
+			}
+		}
+
+		if ( '' !== $display_img_link ) {
+			if( "true" === $display_img_link || true === $display_img_link ) {
+				$display_img_link = true;
+			}
+			if( "false" === $display_img_link || false === $display_img_link ) {
+				$display_img_link = false;
+			}
+		}
+
+		if ( '' !== $is_external ) {
+			if( "true" === $is_external || true === $is_external ) {
+				$is_external = true;
+			}
+			if( "false" === $is_external || false === $is_external ) {
+				$is_external = false;
+			}
+		}
+
 
 		$the_query = preg_replace_callback('~&#x0*([0-9a-f]+);~', function($matches){
 			return chr( dechex( $matches[1] ) );
@@ -383,8 +417,8 @@ Domain Path: /languages
 		// the loop
 		if (have_posts()) : while (have_posts()) : the_post();
 
-			$temp_title = get_the_title($post->ID);
-			//$temp_link = get_permalink($post->ID);
+			$temp_title = get_the_title( $post->ID );
+			$temp_link = get_permalink( $post->ID );
 			//$temp_date = get_the_date($post->ID);
 			$temp_pic = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
 			//$temp_excerpt = wp_trim_words( get_the_excerpt(), 150 );
@@ -396,13 +430,23 @@ Domain Path: /languages
 			$output .= "<article class='post-$the_id' >"; 
 			
 				$output .= '<div class="slick-slider-item">';
-				
-				if($temp_pic) { 
-					
-					$output .= "<img class='post-img-feat' src='$temp_pic'>"; 
-					
-				} 
-				if($temp_title) { $output .= '<p class="slick-p">' . $temp_title . '</p>'; }
+
+				if( true === $display_img_link ) {
+					if ( true === $is_external ) {
+						$output .= '<a class="" target="_blank" href="' . $temp_link . '">';
+					} else {
+						$output .= '<a class="" href="' . $temp_link . '">';
+					}
+				}
+				if( $temp_pic ) {
+					$output .= '<img class="post-img-feat" src="' . $temp_pic . '">';
+				}
+				if( true === $display_img_link ) {
+					$output .= '</a>';
+				}
+				if( $temp_title && $display_caption ) {
+					$output .= '<p class="slick-p">' . $temp_title . '</p>';
+				}
 				
 				$output .= '</div>';
 

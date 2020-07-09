@@ -308,12 +308,29 @@
 	
 	
 	.logo-slider .slick-slide {
-		padding: 0 10px; 
+		/*padding: 0 10px; */
 	}
 	
 	
 	.slick-slide img { margin: 0 auto; }
-	
+
+	.logo-slider article .slick-slider-item {
+		padding: 5px 10px;
+		/*border: 1px solid black;*/
+		overflow: hidden;
+		word-wrap: break-word;
+	}
+
+	.logo-slider article .slick-slider-item .post-img-feat {
+		width: 100%;
+	}
+
+	.logo-slider article .slick-slider-item .slick-p {
+		letter-spacing: 1px;
+		word-wrap: break-word;
+		white-space: normal;
+	}
+
 	
 	.sy-box { margin-bottom: 10px; }
 	
