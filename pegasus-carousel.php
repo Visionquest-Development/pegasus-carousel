@@ -505,11 +505,11 @@ Domain Path: /languages
 		// Reset and setup variables
 		global $post;
 		$output = '';
-		//$temp_title = '';
-		//$temp_link = '';
-		//$temp_date = '';
+		$temp_title = '';
+		$temp_link = '';
+		$temp_date = '';
 		$temp_pic = '';
-	//	$temp_content = '';
+		$temp_content = '';
 		$the_id = '';
 
 		// the loop
