@@ -53,10 +53,10 @@
 		  ]
 		});
 
-		// $('.logo-slider .slick-slide img').matchHeight();
-		// $('.logo-slider .slick-slide .slick-p').matchHeight();
-		// $('.testimonial-slider article').matchHeight();
-		// $('.slippry-slider-container img').matchHeight();
+		$('.logo-slider .slick-slide img').matchHeight();
+		$('.logo-slider .slick-slide .slick-p').matchHeight();
+		$('.testimonial-slider article').matchHeight();
+		$('.slippry-slider-container img').matchHeight();
 
 
 	})( jQuery );
