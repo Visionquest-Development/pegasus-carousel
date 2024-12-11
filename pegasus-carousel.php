@@ -1,4 +1,4 @@
-<?php 
+<?php
 /*
 Plugin Name: Pegasus Carousel Plugin
 Plugin URI:  https://developer.wordpress.org/plugins/the-basics/
@@ -28,93 +28,167 @@ Domain Path: /languages
 	$theme_template_dir = $theme->get_template_directory_uri();
 	$theme_stylesheet_dir = $theme->get_stylesheet_directory_uri();
 
-	function pegasus_carousel_submenu_item() {
-		//add_menu_page("Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99);
+	$results_array = array(
+		'theme' => $theme,
+		'theme_template' => $theme_template,
+		'theme_stylesheet' => $theme_stylesheet,
+		'theme_template_dir' => $theme_template_dir,
+		'theme_stylesheet_dir' => $theme_stylesheet_dir
+	);
 
-		//string $parent_slug, string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = ''
-		//add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
-	}
+	// echo "<pre>";
+	// var_dump($results_array);
+	// echo "</pre>";
+
+	// function pegasus_carousel_submenu_item() {
+	// 	//add_menu_page("Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99);
+
+	// 	//string $parent_slug, string $page_title, string $menu_title, string $capability, string $menu_slug, callable $function = ''
+	// 	//add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+	// }
 
 	function pegasus_carousel_menu_item() {
-		//add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 99 );
-		//add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
+		add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 82 );
+		add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
 	}
 
-	if( 'pegasus-child' === $theme_template || 'pegasus' === $theme_template || 'pegasus-child' === $theme_stylesheet || 'pegasus' === $theme_stylesheet ) {
+	//pegasus_carousel_plugin_settings_page
+
+	if( 'pegasus' === $theme_template || 'pegasus' === $theme_stylesheet || 'pegasus-child' === $theme_template || 'pegasus-child' === $theme_stylesheet ) {
 		//do nothing
 		//add_action("admin_menu", "pegasus_carousel_submenu_item");
 	} else {
 		//stuff
-		//add_action("admin_menu", "pegasus_carousel_menu_item");
+		add_action("admin_menu", "pegasus_carousel_menu_item");
 	}
 
-	add_action("admin_menu", "pegasus_carousel_menu_item");
+	//add_action("admin_menu", "pegasus_carousel_menu_item");
 
 	function pegasus_carousel_plugin_settings_page() { ?>
 	    <div class="wrap">
 	    <h1>Carousel</h1>
-		
+
 		<form method="post" action="options.php">
 	        <?php
 	            settings_fields("section");
-	            do_settings_sections("theme-options");      
-	            submit_button(); 
-	        ?>          
+	            do_settings_sections("theme-options");
+	            submit_button();
+	        ?>
 	    </form>
-		
+
 		</div>
 	<?php
 	}
-	
-	function pegasus_carousel_plugin_shortcode_settings_page() {
-		/*
-		?>
+
+	function pegasus_carousel_plugin_shortcode_settings_page() { ?>
 		<div class="wrap pegasus-wrap">
 			<h1>Shortcode Usage</h1>
-			
-			<p>Logo Slider Usage: <pre>[logo_slider]</pre></p>
-			<p>Logo Slider Usage: <pre>[logo_slider the_query="post_type=logo_slider&showposts=100&order_by=title&order=ASC"]</pre></p>
-			<p>Testimonial Slider Usage: <pre>[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]</pre></p>
-			
-			
+
+			<div>
+				<h3>Logo Slider Usage 1:</h3>
+				<style>
+					pre {
+						background-color: #f9f9f9;
+						border: 1px solid #aaa;
+						page-break-inside: avoid;
+						font-family: monospace;
+						font-size: 15px;
+						line-height: 1.6;
+						margin-bottom: 1.6em;
+						max-width: 100%;
+						overflow: auto;
+						padding: 1em 1.5em;
+						display: block;
+						word-wrap: break-word;
+					}
+
+					input[type="text"].code {
+						width: 100%;
+					}
+				</style>
+				<pre >[logo_slider the_query="post_type=logo_slider&showposts=100&order_by=title&order=ASC"]</pre>
+
+				<input
+					type="text"
+					readonly
+					value="<?php echo esc_html('[logo_slider the_query="post_type=logo_slider&showposts=100&order_by=title&order=ASC"]'); ?>"
+					class="regular-text code"
+					id="my-shortcode"
+					onClick="this.select();"
+				>
+			</div>
+
+			<div>
+				<h3>Testimonial Usage 1:</h3>
+				<style>
+					pre {
+						background-color: #f9f9f9;
+						border: 1px solid #aaa;
+						page-break-inside: avoid;
+						font-family: monospace;
+						font-size: 15px;
+						line-height: 1.6;
+						margin-bottom: 1.6em;
+						max-width: 100%;
+						overflow: auto;
+						padding: 1em 1.5em;
+						display: block;
+						word-wrap: break-word;
+					}
+
+					input[type="text"].code {
+						width: 100%;
+					}
+				</style>
+				<pre >[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]</pre>
+
+				<input
+					type="text"
+					readonly
+					value="<?php echo esc_html('[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]'); ?>"
+					class="regular-text code"
+					id="my-shortcode"
+					onClick="this.select();"
+				>
+			</div>
+
 			<p style="color:red;">MAKE SURE YOU DO NOT HAVE ANY RETURNS OR <?php echo htmlspecialchars('<br>'); ?>'s IN YOUR SHORTCODES, OTHERWISE IT WILL NOT WORK CORRECTLY</p>
-		
+
 		</div>
 		<?php
-		*/
 	}
-	
+
 	function enable_logo_slider_cpt() { ?>
 		<input name="chk_slider_cpt" type="checkbox" value="1" <?php checked(1, get_option('chk_slider_cpt'), true); ?> />
-		
+
 		<?php
 	}
-	
-	
+
+
 	function enable_testimonial_cpt() { ?>
 		<input name="chk_testimonial_cpt" type="checkbox" value="1" <?php checked(1, get_option('chk_testimonial_cpt'), true); ?> />
-		
+
 		<?php
 	}
-	
-	function display_carousel_plugin_panel_fields() { 
+
+	function display_carousel_plugin_panel_fields() {
 		add_settings_section("section", "Shortcode Settings", null, "theme-options");
-	
+
 		add_settings_field("chk_slider_cpt", "Enable Logo Slider Custom Post Type", "enable_logo_slider_cpt", "theme-options", "section");
 		add_settings_field("chk_testimonial_cpt", "Enable Testimonial Custom Post Type", "enable_testimonial_cpt", "theme-options", "section");
-		
+
 		/*================
 		REGISTER SETTINGS
 		=================*/
 
 		register_setting("section", "chk_slider_cpt");
 		register_setting("section", "chk_testimonial_cpt");
-		
+
 	}
 	add_action("admin_init", "display_carousel_plugin_panel_fields");
-	
+
 	function pegasus_carousel_plugin_styles() {
-		
+
 		//wp_enqueue_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
 		//wp_enqueue_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
 		wp_register_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
@@ -122,38 +196,38 @@ Domain Path: /languages
 
 	}
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_styles' );
-	
+
 	/**
-	* Proper way to enqueue JS 
+	* Proper way to enqueue JS
 	*/
 	function pegasus_carousel_plugin_js() {
-		
+
 		//wp_enqueue_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, true );
 		//wp_enqueue_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, true );
 		//wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
 		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, 'all' );
 		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, 'all' );
 		wp_register_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, 'all' );
-		
+
 	} //end function
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_js' );
-	
-	
-	
+
+
+
 		/* ===============================================================================================
 		============================ CUSTOM POST TYPE  ==================================================
 		================================================================================================*/
 	add_action( 'init', 'pegasus_slider_cpt_init' );
 	function pegasus_slider_cpt_init() {
-		
+
 		$enableTestimonialCPT = get_option('chk_testimonial_cpt');
 		//echo "<pre>";  var_dump($test); echo "</pre><hr>";
-			
+
 		if( '1' == $enableTestimonialCPT ) {
 			/*================================
 			========Testimonial Post Type ========
 			================================*/
-		
+
 			$review_labels = array(
 				'name' => _x('Testimonials', 'post type general name', 'pegasus-bootstrap'),
 				'singular_name' => _x('Testimonials', 'post type singular name', 'pegasus-bootstrap'),
@@ -188,19 +262,19 @@ Domain Path: /languages
 				//'taxonomies' => array('category'),
 				'supports' => array('title','editor','author','thumbnail','excerpt','comments','custom-fields','page-attributes')
 			);
-		
+
 			// We call this function to register the custom post type
 			register_post_type('testimonial',$review_args);
 		} //testimonial cpt check
-	
+
 		$enableSliderCPT = get_option('chk_slider_cpt');
 		//echo "<pre>";  var_dump($test); echo "</pre><hr>";
-			
+
 		if( '1' == $enableSliderCPT ) {
 			/*============================
 			======= Logo Slider Post Type ========
 			============================*/
-			
+
 			$logo_slider_labels = array(
 				'name' => _x('Logos', 'logo slider general name', 'pegasus-bootstrap'),
 				'singular_name' => _x('Logo', 'logo slider singular name', 'pegasus-bootstrap'),
@@ -215,7 +289,7 @@ Domain Path: /languages
 				'parent_item_colon' => '',
 				'menu_name' => 'Logo Slider'
 			);
-			   
+
 			// Some arguments and in the last line 'supports', we say to WordPress what features are supported on the Project post type
 			$logo_slider_args = array(
 				'labels' => $logo_slider_labels,
@@ -236,22 +310,22 @@ Domain Path: /languages
 				//'taxonomies' => array('category'),
 				'supports' => array('title','editor','author','thumbnail','excerpt','comments','custom-fields','page-attributes')
 			);
-		
+
 			// We call this function to register the custom post type
 			register_post_type('logo_slider',$logo_slider_args);
-		
-		
+
+
 		} //logo slider cpt check
-		
-	
+
+
 	} //end cpt init
-		
-		
+
+
 	function my_rewrite_flush() {
 		flush_rewrite_rules();
 	}
 	add_action( 'after_switch_theme', 'my_rewrite_flush' );
-	
+
 	/* fixes permalinks for custom post types */
 	add_action('init', 'my_rewrite');
 	function my_rewrite() {
@@ -260,28 +334,28 @@ Domain Path: /languages
 		add_rewrite_rule('typename/([0-9]{4})/(.+)/?$', 'index.php?typename=$matches[2]', 'top');
 		$wp_rewrite->flush_rules(); // !!!
 	}
-	
-	
-	
+
+
+
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~META BOXES~~~~~~~~~~~~~~~~~~~~~~~~
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 	/*--- Demo URL meta box ---*/
- 
+
 	add_action('admin_init','testimonial_meta_init');
-	 
+
 	function testimonial_meta_init() {
 		// add a meta box for WordPress 'project' type
 		//add_meta_box('testimonial_meta', 'Testimonial Options', 'testimonial_meta_setup', 'testimonial', 'side', 'high');
 		add_meta_box('testimonial_meta', 'Testimonial Options', 'testimonial_meta_setup', 'testimonial', 'normal', 'high');
-	  
+
 		// add a callback function to save any data a user enters in
 		add_action('save_post','testimonial_meta_save');
 	}
-	 
+
 	function testimonial_meta_setup() {
 		global $post;
-		  
+
 		?>
 			<div class="testimonial_meta_control">
 				<label for="_position">Position</label>
@@ -298,17 +372,17 @@ Domain Path: /languages
 				</p>
 			</div>
 		<?php
-	 
+
 		// create for validation
 		echo '<input type="hidden" name="meta_noncename" value="' . wp_create_nonce(__FILE__) . '" />';
 	}
-	 
+
 	function testimonial_meta_save($post_id) {
 		// check nonce
 		if (!isset($_POST['meta_noncename']) || !wp_verify_nonce($_POST['meta_noncename'], __FILE__)) {
 			return $post_id;
 		}
-	 
+
 		// check capabilities
 		if ('post' == $_POST['post_type']) {
 			if (!current_user_can('edit_post', $post_id)) {
@@ -317,38 +391,38 @@ Domain Path: /languages
 		} elseif (!current_user_can('edit_page', $post_id)) {
 			return $post_id;
 		}
-	 
+
 		// exit on autosave
-		if (defined('DOING_AUTOSAVE') == DOING_AUTOSAVE) {
+		if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
 			return $post_id;
 		}
-	 
+
 		if(isset($_POST['_position'])) { update_post_meta($post_id, '_position', $_POST['_position']); } else { delete_post_meta($post_id, '_position'); }
 		if(isset($_POST['_company_name'])) { update_post_meta($post_id, '_company_name', $_POST['_company_name']); } else { delete_post_meta($post_id, '_company_name'); }
 		if(isset($_POST['_company_url'])) { update_post_meta($post_id, '_company_url', $_POST['_company_url']); } else { delete_post_meta($post_id, '_company_url'); }
 	}
-	 
+
 	/*--- #end  Demo URL meta box ---*/
-	
-	
-	
-	
+
+
+
+
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~SHORTCODES~~~~~~~~~~~~~~~~~~~~~~~~
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
-	
-	
+
+
 
 	/*~~~~~~~~~~~~~~~~~~~~
 		LOGO SLIDER
 	~~~~~~~~~~~~~~~~~~~~~*/
-	// [logo_slider the_query="post_type=logo_slider&showposts=100" ]	
+	// [logo_slider the_query="post_type=logo_slider&showposts=100" ]
 	function logo_slider_query_shortcode($atts) {
 
 		$a = shortcode_atts( array(
 			//"bkg_color" => ''
 		), $atts );
-		
+
 		// Defaults
 		extract(shortcode_atts(array(
 			"the_query" => '',
@@ -396,13 +470,37 @@ Domain Path: /languages
 		$the_query = preg_replace_callback('~&#0*([0-9]+);~', function($matches){
 			return chr( $matches[1] );
 		}, $the_query);
-		
+
 		if ( '' === $the_query || null === $the_query || empty( $the_query ) ) {
 			$the_query = 'post_type=logo_slider&showposts=100';
 		}
-		
-		// query is made               
-		query_posts( $the_query );
+
+		$query_args = array(
+			'post_type' => 'logo_slider', // Ensure you are querying the correct post type
+			'posts_per_page' => -1, // Set the number of posts to retrieve
+			//'post_status' => 'publish', // Ensure only published posts are retrieved
+			//'category_name' => 'your-category-slug', // Optional: Filter by category
+			//'orderby' => 'date', // Optional: Order by date
+			//'order' => 'DESC' // Optional: Order descending
+		);
+
+		// echo '<pre>';
+		// var_dump( $the_query );
+		// echo '</pre>';
+		// echo '<pre>';
+		// var_dump( $query_args );
+		// echo '</pre>';
+		// Convert query string into array for WP_Query
+		parse_str( $the_query, $query_args );
+		// echo '<pre>';
+		// var_dump( $query_args );
+		// echo '</pre>';
+		// Create a new WP_Query instance
+		$query = new WP_Query( $query_args );
+
+		// echo '<pre>';
+		// var_dump( $query->posts );
+		// echo '</pre>';
 
 		// Reset and setup variables
 		global $post;
@@ -415,46 +513,56 @@ Domain Path: /languages
 		$the_id = '';
 
 		// the loop
-		if (have_posts()) : while (have_posts()) : the_post();
+		//if (have_posts()) : while (have_posts()) : the_post();
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
 
-			$temp_title = get_the_title( $post->ID );
-			$temp_link = get_permalink( $post->ID );
-			//$temp_date = get_the_date($post->ID);
-			$temp_pic = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
-			//$temp_excerpt = wp_trim_words( get_the_excerpt(), 150 );
-			//$temp_content = wp_trim_words( get_the_content(), 300 );
-			$the_id = get_the_ID();
-			
+				// $temp_title = get_the_title( $post->ID );
+				// $temp_link = get_permalink( $post->ID );
+				// //$temp_date = get_the_date($post->ID);
+				// $temp_pic = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+				// //$temp_excerpt = wp_trim_words( get_the_excerpt(), 150 );
+				// //$temp_content = wp_trim_words( get_the_content(), 300 );
+				// $the_id = get_the_ID();
 
-			// output all findings - CUSTOMIZE TO YOUR LIKING
-			$output .= "<article class='post-$the_id' >"; 
-			
-				$output .= '<div class="slick-slider-item">';
+				$post_id    = get_the_ID();
+				$post_title = get_the_title();
+				$post_link  = get_permalink();
+				$post_thumb = has_post_thumbnail() ? get_the_post_thumbnail_url($post_id, 'medium') : plugin_dir_url(__FILE__) . '/images/not-available.png';
+				$categories = get_the_category();
 
-				if( true === $display_img_link ) {
-					if ( true === $is_external ) {
-						$output .= '<a class="" target="_blank" href="' . $temp_link . '">';
-					} else {
-						$output .= '<a class="" href="' . $temp_link . '">';
+
+				// output all findings - CUSTOMIZE TO YOUR LIKING
+				$output .= "<article class='post-$post_id' >";
+
+					$output .= '<div class="slick-slider-item">';
+					if( true === $display_img_link ) {
+						if ( true === $is_external ) {
+							$output .= '<a class="" target="_blank" href="' . $post_link . '">';
+						} else {
+							$output .= '<a class="" href="' . $post_link . '">';
+						}
 					}
-				}
-				if( $temp_pic ) {
-					$output .= '<img class="post-img-feat" src="' . $temp_pic . '">';
-				}
-				if( true === $display_img_link ) {
-					$output .= '</a>';
-				}
-				if( $temp_title && $display_caption ) {
-					$output .= '<p class="slick-p">' . $temp_title . '</p>';
-				}
-				
-				$output .= '</div>';
+					if( $post_thumb ) {
+						$output .= '<img class="post-img-feat" src="' . $post_thumb . '">';
+					}
+					if( true === $display_img_link ) {
+						$output .= '</a>';
+					}
+					if( $post_title && $display_caption ) {
+						$output .= '<p class="slick-p">' . $post_title . '</p>';
+					}
 
-			$output .= "</article>";
-		endwhile; else:
-			$output .= "nothing found.";
-		endif;
+					$output .= '</div>';
 
+				$output .= "</article>";
+			}//end while
+			wp_reset_postdata();
+		} else {
+			echo '<p>No posts found.</p>';
+		}
+		//wp_reset_postdata();
 		wp_reset_query();
 
 		wp_enqueue_style( 'slick-css' );
@@ -464,15 +572,15 @@ Domain Path: /languages
 		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
 
 		return '<section class="center logo-slider slider">' . $output . '</section>';
-	   
+
 	}
 	add_shortcode("logo_slider", "logo_slider_query_shortcode");
-	
+
 	/*~~~~~~~~~~~~~~~~~~~~
 		TESTIMONIAL SLIDER
 	~~~~~~~~~~~~~~~~~~~~~*/
-	
-	// [testimonial_slider the_query="post_type=testimonial&showposts=100" ]	
+
+	// [testimonial_slider the_query="post_type=testimonial&showposts=100" ]
 	function testimonial_slider_query_shortcode($atts) {
 
 		$a = shortcode_atts( array(
@@ -480,7 +588,7 @@ Domain Path: /languages
 			"type" => '',
 			"class" => ''
 		), $atts );
-		
+
 		// Defaults
 		extract(shortcode_atts(array(
 			"the_query" => '',
@@ -498,8 +606,42 @@ Domain Path: /languages
 			return chr( $matches[1] );
 		}, $the_query);
 
-		// query is made               
-		query_posts($the_query);
+		if ( '' === $the_query || null === $the_query || empty( $the_query ) ) {
+			$the_query = 'post_type=testimonial&showposts=100';
+		}
+
+		$query_args = array(
+			'post_type' => 'testimonial', // Ensure you are querying the correct post type
+			'posts_per_page' => -1, // Set the number of posts to retrieve
+			//'post_status' => 'publish', // Ensure only published posts are retrieved
+			//'category_name' => 'your-category-slug', // Optional: Filter by category
+			//'orderby' => 'date', // Optional: Order by date
+			//'order' => 'DESC' // Optional: Order descending
+		);
+
+		// echo '<pre>';
+		// var_dump( $the_query );
+		// echo '</pre>';
+		// echo '<pre>';
+		// var_dump( $query_args );
+		// echo '</pre>';
+		// Convert query string into array for WP_Query
+		//parse_str( $the_query, $query_args );
+		// echo '<pre>';
+		// var_dump( $query_args );
+		// echo '</pre>';
+		// Create a new WP_Query instance
+		$query = new WP_Query( $query_args );
+
+		// echo '<pre>';
+		// var_dump( $query->posts );
+		// echo '</pre>';
+		global $post;
+
+		$img_attr_val = "{$a['image']}";
+		$type = "{$a['type']}";
+		$class = "{$a['class']}";
+
 
 		// Reset and setup variables
 		$output = '';
@@ -510,61 +652,85 @@ Domain Path: /languages
 		$temp_content = '';
 		$the_id = '';
 
-		global $post;
-		
-			//$color_chk = "{$a['bkg_color']}";
-			//if ($color_chk) { $output .= "<li style='background: {$a['bkg_color']}; '>"; }else{ $output .= "<li>"; }
-		
-		// the loop
-		if (have_posts()) : while (have_posts()) : the_post();
 
-			$temp_title = get_the_title($post->ID);
-			$temp_link = get_permalink($post->ID);
-			$temp_date = get_the_date($post->ID);
-			$temp_pic = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
-			$temp_excerpt = wp_trim_words( get_the_excerpt(), 150 );
-			$temp_content = wp_trim_words( get_the_content(), 300 );
-			$the_id = get_the_ID();
-			
-			// output all findings - CUSTOMIZE TO YOUR LIKING
-			$output .= "<article class='post-$the_id' >"; 
-				
-				$img_attr_val = "{$a['image']}";
-				if($temp_pic && 'yes' == $img_attr_val || 'circle' == $img_attr_val ) { 
-					$output .= "<div class='testimonial-image'>";
-					if ( 'circle' == $img_attr_val ) {
-						$output .= "<img class='post-img-feat circle' src='$temp_pic'>"; 
-					} else {
-						$output .= "<img class='post-img-feat' src='$temp_pic'>"; 
+		if ($query->have_posts()) {
+			while ($query->have_posts()) {
+				$query->the_post();
+
+
+
+				//$color_chk = "{$a['bkg_color']}";
+				//if ($color_chk) { $output .= "<li style='background: {$a['bkg_color']}; '>"; }else{ $output .= "<li>"; }
+
+				// the loop
+				//if (have_posts()) : while (have_posts()) : the_post();
+
+				$temp_title = get_the_title($post->ID);
+				$temp_link = get_permalink($post->ID);
+				$temp_date = get_the_date($post->ID);
+				$temp_pic = wp_get_attachment_url( get_post_thumbnail_id($post->ID) );
+				$temp_excerpt = wp_trim_words( get_the_excerpt(), 150 );
+				$temp_content = wp_trim_words( get_the_content(), 300 );
+				$the_id = get_the_ID();
+
+				$position = get_post_meta($post->ID, '_position', TRUE);
+				$company_name = get_post_meta($post->ID, '_company_name', TRUE);
+				$company_url = get_post_meta($post->ID, '_company_url', TRUE);
+
+
+				// $the_id    = get_the_ID();
+				// $temp_title = get_the_title();
+				// $temp_link  = get_permalink();
+				// $temp_pic = has_post_thumbnail() ? get_the_post_thumbnail_url($the_id, 'medium') : plugin_dir_url(__FILE__) . '/images/not-available.png';
+				// $categories = get_the_category();
+				// $temp_excerpt   = wp_trim_words( get_the_excerpt(), 150 );
+				// $temp_content   = wp_trim_words( get_the_content(), 300 );
+
+				// output all findings - CUSTOMIZE TO YOUR LIKING
+				$output .= "<article class='post-$the_id' >";
+
+					if($temp_pic && 'yes' == $img_attr_val || 'circle' == $img_attr_val ) {
+						$output .= "<div class='testimonial-image'>";
+						if ( 'circle' == $img_attr_val ) {
+							$output .= "<img class='post-img-feat circle' src='$temp_pic'>";
+						} else {
+							$output .= "<img class='post-img-feat' src='$temp_pic'>";
+						}
+						$output .= "</div>";
 					}
-					$output .= "</div>";
-				} 
-				
-				$output .= "<div class='{$a['type']} {$a['class']}'><blockquote>";
-				$output .= "<p class='post-content'>";
-				if(isset($temp_excerpt)) {
-					//$temporary_excerpt = substr(strip_tags($temp_excerpt), 0, 150);
-					//if($temporary_excerpt){
-							//$output .= $temporary_excerpt; 
-							//$output .= '...';
-					//}
-					$output .= $temp_excerpt; 
-				}else{  
-					//$more = 0; 
-					//$temporary = substr(strip_tags($temp_content), 0, 300); 
-					//if($temporary){ $output .= $temporary; $output .= '...'; } 
-					$output .= $temp_content; 
-				}
-				$output .= "</p>";
-				
-				$output .= '<cite>'.$temp_title.'<br /><span class="">'.$temp_title.'</span></cite>';
-				$output .= '</blockquote></div>';
 
-			$output .= "</article>";
-		endwhile; else:
-			$output .= "nothing found.";
-		endif;
 
+
+					$output .= "<div class='{$type} {$class}'><blockquote>";
+					$output .= "<p class='post-content'>";
+					if(isset($temp_excerpt)) {
+						//$temporary_excerpt = substr(strip_tags($temp_excerpt), 0, 150);
+						//if($temporary_excerpt){
+								//$output .= $temporary_excerpt;
+								//$output .= '...';
+						//}
+						$output .= $temp_excerpt;
+					}else{
+						//$more = 0;
+						//$temporary = substr(strip_tags($temp_content), 0, 300);
+						//if($temporary){ $output .= $temporary; $output .= '...'; }
+						$output .= $temp_content;
+					}
+					$output .= "</p>";
+
+					$output .= '<cite>'.$temp_title.'<br />';
+						$output .= '<span class="">' . $temp_title . '</span>';
+					$output .= '</cite>';
+					$output .= '</blockquote></div>';
+
+				$output .= "</article>";
+			}//end while
+			wp_reset_postdata();
+		} else {
+			echo '<p>No posts found.</p>';
+		}
+
+		//wp_reset_postdata();
 		wp_reset_query();
 
 		wp_enqueue_style( 'slick-css' );
@@ -574,8 +740,8 @@ Domain Path: /languages
 		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
 
 		return '<section role="complementary" class="simple white-back testimonial-slider quotes no-fouc">' . $output . '</section>';
-	   
+
 	}
 	add_shortcode("testimonial_slider", "testimonial_slider_query_shortcode");
-	
-	
+
+
