@@ -1,0 +1,67 @@
+{
+  "rows": [
+    {
+      "section_name": "Carousel Settings",
+      "logo_slider": [
+        {
+          "name": "The Query",
+          "attribute": "the_query",
+          "options": "Your WP Query",
+          "description": "The query for posts.'",
+          "example": "the_query=\"post_type=logo_slider&order_by=title&order=ASC\""
+        },
+        {
+          "name": "Display Caption",
+          "attribute": "display_caption",
+          "options": "true, false",
+          "description": "Display the caption?",
+          "example": "display_caption=\"true\""
+        },
+        {
+          "name": "Display Image Link",
+          "attribute": "display_img_link",
+          "options": "true, false",
+          "description": "Show the image as a link?",
+          "example": "display_img_link=\"true\""
+        },
+        {
+          "name": "External Link",
+          "attribute": "is_external",
+          "options": "true, false",
+          "description": "Make the link external",
+          "example": "is_external=\"true\""
+        }
+      ],
+      "testimonial_slider": [
+        {
+          "name": "The Query",
+          "attribute": "the_query",
+          "options": "Your WP Query",
+          "description": "The query for posts.'",
+          "example": "the_query=\"post_type=testimonial_slider&order_by=title&order=ASC\""
+        },
+        {
+          "name": "Image",
+          "attribute": "image",
+          "options": "true, false",
+          "description": "Display the image? Defaults to true.",
+          "example": "image=\"true\""
+        },
+        {
+          "name": "Type",
+          "attribute": "type",
+          "options": "circle, none",
+          "description": "The type of image to display.",
+          "example": "type=\"circle\""
+        },
+        {
+          "name": "Class",
+          "attribute": "class",
+          "options": "any",
+          "description": "The class to apply to the image container.",
+          "example": "class=\"testing\""
+        }
+      ]
+    }
+  ]
+}

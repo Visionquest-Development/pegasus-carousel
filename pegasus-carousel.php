@@ -47,6 +47,40 @@ Domain Path: /languages
 	// 	//add_submenu_page( "pegasus_options", "Carousel Usage", "Carousel Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
 	// }
 
+	function carousel_check_main_theme_name() {
+		$current_theme_slug = get_option('stylesheet'); // Slug of the current theme (child theme if used)
+		$parent_theme_slug = get_option('template');    // Slug of the parent theme (if a child theme is used)
+
+		//error_log( "current theme slug: " . $current_theme_slug );
+		//error_log( "parent theme slug: " . $parent_theme_slug );
+
+		if ( $current_theme_slug == 'pegasus' ) {
+			return 'Pegasus';
+		} elseif ( $current_theme_slug == 'pegasus-child' ) {
+			return 'Pegasus Child';
+		} else {
+			return 'Not Pegasus';
+		}
+	}
+
+	/*function pegasus_blog_menu_item() {
+		if ( blog_check_main_theme_name() == 'Pegasus' || blog_check_main_theme_name() == 'Pegasus Child' ) {
+			//do nothing
+		} else {
+			//echo 'This is NOT the Pegasus theme';
+			add_menu_page(
+				"Blog", // Page title
+				"Blog", // Menu title
+				"manage_options", // Capability
+				"pegasus_blog_plugin_options", // Menu slug
+				"pegasus_blog_plugin_settings_page", // Callback function
+				null, // Icon
+				80 // Position in menu
+			);
+		}
+	}
+	add_action("admin_menu", "pegasus_blog_menu_item"); */
+
 	function pegasus_carousel_menu_item() {
 		add_menu_page( "Carousel", "Carousel", "manage_options", "pegasus_carousel_plugin_options", "pegasus_carousel_plugin_settings_page", null, 82 );
 		add_submenu_page( "pegasus_carousel_plugin_options", "Shortcode Usage", "Usage", "manage_options", "pegasus_carousel_plugin_shortcode_options", "pegasus_carousel_plugin_shortcode_settings_page" );
@@ -61,6 +95,67 @@ Domain Path: /languages
 		//stuff
 		add_action("admin_menu", "pegasus_carousel_menu_item");
 	}
+
+	function pegasus_carousel_admin_table_css() {
+		if ( carousel_check_main_theme_name() == 'Pegasus' || carousel_check_main_theme_name() == 'Pegasus Child' ) {
+			//do nothing
+		} else {
+			//wp_register_style('carousel-admin-table-css', trailingslashit(plugin_dir_url(__FILE__)) . 'css/pegasus-carousel-admin-table.css', array(), null, 'all');
+			ob_start();
+			?>
+				pre {
+					background-color: #f9f9f9;
+					border: 1px solid #aaa;
+					page-break-inside: avoid;
+					font-family: monospace;
+					font-size: 15px;
+					line-height: 1.6;
+					margin-bottom: 1.6em;
+					max-width: 100%;
+					overflow: auto;
+					padding: 1em 1.5em;
+					display: block;
+					word-wrap: break-word;
+				}
+				input[type="text"].code {
+					width: 100%;
+				}
+				table.pegasus-table {
+					width: 100%;
+					border-collapse: collapse;
+					border-color: #777 !important;
+				}
+				table.pegasus-table th {
+					background-color: #f1f1f1;
+					text-align: left;
+				}
+				table.pegasus-table th,
+				table.pegasus-table td {
+					border: 1px solid #ddd;
+					padding: 8px;
+				}
+				table.pegasus-table tr:nth-child(even) {
+					background-color: #f2f2f2;
+				}
+				table.pegasus-table thead tr { background-color: #282828; }
+				table.pegasus-table thead tr td { padding: 10px; }
+				table.pegasus-table thead tr td strong { color: white; }
+				table.pegasus-table tbody tr:nth-child(0) { background-color: #cccccc; }
+				table.pegasus-table tbody tr td { padding: 10px; }
+				table.pegasus-table code { color: #d63384; }
+
+			<?php
+			// Get the buffered content
+			$inline_css = ob_get_clean();
+
+			wp_register_style('carousel-admin-table-css', false);
+			wp_enqueue_style('carousel-admin-table-css');
+
+			wp_add_inline_style('carousel-admin-table-css', $inline_css);
+		}
+	}
+
+	add_action('admin_enqueue_scripts', 'pegasus_carousel_admin_table_css');
 
 	//add_action("admin_menu", "pegasus_carousel_menu_item");
 
@@ -86,26 +181,6 @@ Domain Path: /languages
 
 			<div>
 				<h3>Logo Slider Usage 1:</h3>
-				<style>
-					pre {
-						background-color: #f9f9f9;
-						border: 1px solid #aaa;
-						page-break-inside: avoid;
-						font-family: monospace;
-						font-size: 15px;
-						line-height: 1.6;
-						margin-bottom: 1.6em;
-						max-width: 100%;
-						overflow: auto;
-						padding: 1em 1.5em;
-						display: block;
-						word-wrap: break-word;
-					}
-
-					input[type="text"].code {
-						width: 100%;
-					}
-				</style>
 				<pre >[logo_slider the_query="post_type=logo_slider&showposts=100&order_by=title&order=ASC"]</pre>
 
 				<input
@@ -120,26 +195,6 @@ Domain Path: /languages
 
 			<div>
 				<h3>Testimonial Usage 1:</h3>
-				<style>
-					pre {
-						background-color: #f9f9f9;
-						border: 1px solid #aaa;
-						page-break-inside: avoid;
-						font-family: monospace;
-						font-size: 15px;
-						line-height: 1.6;
-						margin-bottom: 1.6em;
-						max-width: 100%;
-						overflow: auto;
-						padding: 1em 1.5em;
-						display: block;
-						word-wrap: break-word;
-					}
-
-					input[type="text"].code {
-						width: 100%;
-					}
-				</style>
 				<pre >[testimonial_slider image="circle" type="bubble" class="test" the_query="post_type=testimonial&showposts=100" ]</pre>
 
 				<input
@@ -154,8 +209,67 @@ Domain Path: /languages
 
 			<p style="color:red;">MAKE SURE YOU DO NOT HAVE ANY RETURNS OR <?php echo htmlspecialchars('<br>'); ?>'s IN YOUR SHORTCODES, OTHERWISE IT WILL NOT WORK CORRECTLY</p>
 
+			<div>
+				<?php echo pegasus_carousel_settings_table(); ?>
+			</div>
 		</div>
 		<?php
+	}
+
+	function pegasus_carousel_settings_table() {
+
+		$data = json_decode( file_get_contents( plugin_dir_path( __FILE__ ) . 'settings.json' ), true );
+
+		if (json_last_error() !== JSON_ERROR_NONE) {
+			return '<p style="color: red;">Error: Invalid JSON provided.</p>';
+		}
+
+		// Start building the HTML
+		$html = '<table border="0" cellpadding="1" class="table pegasus-table" align="left">
+		<thead>
+		<tr style="background-color: #282828;">
+		<td <span><strong>Name</strong></span></td>
+		<td <span><strong>Attribute</strong></span></td>
+		<td <span><strong>Options</strong></span></td>
+		<td <span><strong>Description</strong></span></td>
+		<td <span><strong>Example</strong></span></td>
+		</tr>
+		</thead>
+		<tbody>';
+
+		// Iterate over the data to populate rows
+		if (!empty($data['rows'])) {
+			foreach ($data['rows'] as $section) {
+				foreach ($section as $key => $settings) {
+					if ($key !== 'section_name') {
+						// Add group header
+						$html .= '<tr>';
+						$html .= '<td colspan="5">';
+						$html .= '<span>';
+						$html .= '<strong>' . htmlspecialchars(ucwords(str_replace('_', ' ', $key))) . '</strong>';
+						$html .= '</span>';
+						$html .= '</td>';
+						$html .= '</tr>';
+
+						// Add rows in the group
+						foreach ($settings as $row) {
+							$html .= '<tr>
+								<td>' . htmlspecialchars($row['name']) . '</td>
+								<td>' . htmlspecialchars($row['attribute']) . '</td>
+								<td>' . nl2br(htmlspecialchars($row['options'])) . '</td>
+								<td>' . nl2br(htmlspecialchars($row['description'])) . '</td>
+								<td><code>' . htmlspecialchars($row['example']) . '</code></td>
+							</tr>';
+						}
+					}
+				} //end foreach
+			}
+		}
+
+		$html .= '</tbody></table>';
+
+		// Return the generated HTML
+		return $html;
 	}
 
 	function enable_logo_slider_cpt() { ?>
@@ -584,7 +698,7 @@ Domain Path: /languages
 	function testimonial_slider_query_shortcode($atts) {
 
 		$a = shortcode_atts( array(
-			"image" => '',
+			"image" => 'true',
 			"type" => '',
 			"class" => ''
 		), $atts );
@@ -638,7 +752,11 @@ Domain Path: /languages
 		// echo '</pre>';
 		global $post;
 
-		$img_attr_val = "{$a['image']}";
+		// echo '<pre>';
+		// var_dump($a['image']);
+		// echo '</pre>';
+
+		$img_attr_val = ( 'true' === "{$a['image']}" ) ? true : false;
 		$type = "{$a['type']}";
 		$class = "{$a['class']}";
 
@@ -656,8 +774,6 @@ Domain Path: /languages
 		if ($query->have_posts()) {
 			while ($query->have_posts()) {
 				$query->the_post();
-
-
 
 				//$color_chk = "{$a['bkg_color']}";
 				//if ($color_chk) { $output .= "<li style='background: {$a['bkg_color']}; '>"; }else{ $output .= "<li>"; }
@@ -688,40 +804,48 @@ Domain Path: /languages
 
 				// output all findings - CUSTOMIZE TO YOUR LIKING
 				$output .= "<article class='post-$the_id' >";
-
-					if($temp_pic && 'yes' == $img_attr_val || 'circle' == $img_attr_val ) {
-						$output .= "<div class='testimonial-image'>";
-						if ( 'circle' == $img_attr_val ) {
-							$output .= "<img class='post-img-feat circle' src='$temp_pic'>";
-						} else {
-							$output .= "<img class='post-img-feat' src='$temp_pic'>";
+					$output .= "<div class='{$class}'>";
+						//var_dump( $img_attr_val );
+						if( $temp_pic ) {
+							// echo '<pre>';
+							// var_dump($img_attr_val);
+							// echo '</pre>';
+							if ( true === $img_attr_val ) {
+								$output .= "<div class='testimonial-image'>";
+								if ( 'circle' == $type ) {
+									$output .= "<img class='post-img-feat circle' src='$temp_pic'>";
+								} else {
+									$output .= "<img class='post-img-feat' src='$temp_pic'>";
+								}
+								$output .= "</div>";
+							}
 						}
-						$output .= "</div>";
-					}
 
 
 
-					$output .= "<div class='{$type} {$class}'><blockquote>";
-					$output .= "<p class='post-content'>";
-					if(isset($temp_excerpt)) {
-						//$temporary_excerpt = substr(strip_tags($temp_excerpt), 0, 150);
-						//if($temporary_excerpt){
-								//$output .= $temporary_excerpt;
-								//$output .= '...';
-						//}
-						$output .= $temp_excerpt;
-					}else{
-						//$more = 0;
-						//$temporary = substr(strip_tags($temp_content), 0, 300);
-						//if($temporary){ $output .= $temporary; $output .= '...'; }
-						$output .= $temp_content;
-					}
-					$output .= "</p>";
+						$output .= "<blockquote>";
+							$output .= "<p class='post-content'>";
+							if(isset($temp_excerpt)) {
+								//$temporary_excerpt = substr(strip_tags($temp_excerpt), 0, 150);
+								//if($temporary_excerpt){
+										//$output .= $temporary_excerpt;
+										//$output .= '...';
+								//}
+								$output .= $temp_excerpt;
+							}else{
+								//$more = 0;
+								//$temporary = substr(strip_tags($temp_content), 0, 300);
+								//if($temporary){ $output .= $temporary; $output .= '...'; }
+								$output .= $temp_content;
+							}
+							$output .= "</p>";
 
-					$output .= '<cite>'.$temp_title.'<br />';
-						$output .= '<span class="">' . $temp_title . '</span>';
-					$output .= '</cite>';
-					$output .= '</blockquote></div>';
+							$output .= '<cite>'.$temp_title.'<br />';
+								$output .= '<span class="">' . $temp_title . '</span>';
+							$output .= '</cite>';
+
+						$output .= '</blockquote>';
+					$output .= '</div>';
 
 				$output .= "</article>";
 			}//end while
