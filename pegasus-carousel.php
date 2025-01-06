@@ -321,7 +321,7 @@ Domain Path: /languages
 		//wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
 		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, 'all' );
 		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, 'all' );
-		wp_register_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, 'all' );
+		wp_register_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/pegasus-carousel-plugin.js', array( 'jquery' ), null, 'all' );
 
 	} //end function
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_js' );
@@ -589,6 +589,8 @@ Domain Path: /languages
 			$the_query = 'post_type=logo_slider&showposts=100';
 		}
 
+		$the_query = str_replace('&amp;', '&', $the_query);
+
 		$query_args = array(
 			'post_type' => 'logo_slider', // Ensure you are querying the correct post type
 			'posts_per_page' => -1, // Set the number of posts to retrieve
@@ -724,6 +726,8 @@ Domain Path: /languages
 			$the_query = 'post_type=testimonial&showposts=100';
 		}
 
+		$the_query = str_replace('&amp;', '&', $the_query);
+
 		$query_args = array(
 			'post_type' => 'testimonial', // Ensure you are querying the correct post type
 			'posts_per_page' => -1, // Set the number of posts to retrieve
@@ -840,11 +844,23 @@ Domain Path: /languages
 							}
 							$output .= "</p>";
 
-							$output .= '<cite>'.$temp_title.'<br />';
-								$output .= '<span class="">' . $temp_title . '</span>';
-							$output .= '</cite>';
+
 
 						$output .= '</blockquote>';
+						$output .= '<cite>';
+							if ( $company_name ) {
+								$output .= '<div>' . $temp_title . ' - ' . $company_name . '</div>';
+							} else {
+								$output .= '<div>' . $temp_title . '</div>';
+							}
+								$output .= '<div class="position">' . $position . '</div>';
+								if ( $company_url ) {
+									$output .= '<a href="' . $company_url . '" target="_blank" class="company-url">' . $company_name . '</a>';
+
+								}
+						$output .= '</cite>';
+
+
 					$output .= '</div>';
 
 				$output .= "</article>";

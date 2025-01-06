@@ -30,8 +30,6 @@
     width: 20px;
     height: 20px;
     padding: 0;
-    -webkit-transform: translate(0, -50%);
-    -ms-transform: translate(0, -50%);
     transform: translate(0, -50%);
 
     cursor: pointer;
@@ -207,14 +205,19 @@
 
 
 	.slick-prev:before, .slick-next:before { color: black !important; }
-	
-	
-	
+
+
+
 	.slick-slider {  margin: 30px; }
-	
+
 	/*======================
 		DEFAULT TESTIMONIAL SLIDER CSS
 	======================*/
+
+  .testimonial-slider .slick-slide {
+    position: relative;
+  }
+
 	.white-back .slick-list {
 		box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 		background: #fff;
@@ -222,24 +225,27 @@
 	.simple blockquote {
 		border-top: 1px solid #ccc;
 		border-bottom: 1px solid #ccc;
-		border-left: none; 
-		margin: 20px 20px 40px;
-		padding: 10px 20px 30px;
+		border-left: none;
+		margin: 20px 20px 100px;
+    padding: 10px 20px 30px;
 	}
-	
+
 	.simple blockquote p {
-		
+
 		color: #1e528e;
-		
+
 		font-size: 1.25em;
 		font-style: italic;
 		text-align: center;
 	}
 	.simple cite {
 		font-size: 1em;
-		float: right;
+		/* float: right; */
 		font-style: normal;
 		color: #1e528e;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 	}
 	.simple cite a {
 		color: #2d91c2;
@@ -250,15 +256,15 @@
 	.simple cite a:hover {
 		color: #00B4CC;
 	}
-	
+
 	.testimonial-slider .slick-list { /* overflow: visible !important;  */ }
-	
+
 	@media only screen and (max-width: 768px) {
 		.testimonial-slider .slick-prev, .testimonial-slider .slick-next { display: inline-block !important; position: relative !important; top: 0 !important; right: 0 !important; bottom: 0 !important; left: 0 !important; }
 		.logo-slider .slick-prev { left: 0 !important; }
 		.logo-slider .slick-next { right: 0 !important; }
 	}
-	
+
 
 	/*======================
 		BUBLE TESTIMONIAL SLIDER
@@ -302,16 +308,16 @@
 	} */
 	.bubble cite {
 		padding: 0px 0px 20px 20px;
-		font-size: 14px !important; 
+		font-size: 14px !important;
 		color:#777;
 	}
-	
-	
+
+
 	.logo-slider .slick-slide {
 		/*padding: 0 10px; */
 	}
-	
-	
+
+
 	.slick-slide img { margin: 0 auto; }
 
 	.logo-slider article .slick-slider-item {
@@ -331,36 +337,38 @@
 		white-space: normal;
 	}
 
-	
+
 	.sy-box { margin-bottom: 10px; }
-	
+
 	.no-fouc {
 		display: none;
 	}
-	
-	
-	
+
+
+
 	.testimonial-image {
-		height: 250px !important;
-		width: 250px !important;
-		margin: 0 auto !important;
+		height: auto;
+		min-width: 250px;
+		margin: 0 auto;
 	}
-	
+
 	.testimonial-image .post-img-feat {
 		text-align: center;
-		height: 100%;
-		width: 100%;
-		margin: 0 auto !important;
-		
+		/*height: 100%;
+		width: 100%;*/
+		margin: 0 auto;
+    aspect-ratio: 16 / 9;
+
 	}
-	
+
 	.testimonial-image .post-img-feat.circle {
 		border-radius: 50%;
+    aspect-ratio: 4 / 3;
 	}
 
 	.cite {
 	  text-align: right !important;
-	 
+
 	}
 	.cite:before {
 	  content: '\2014';
