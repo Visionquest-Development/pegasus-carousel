@@ -321,7 +321,7 @@ Domain Path: /languages
 		//wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
 		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, 'all' );
 		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, 'all' );
-		wp_register_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/pegasus-carousel-plugin.js', array( 'jquery' ), null, 'all' );
+		wp_register_script( 'pegasus-carousel-plugin', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/pegasus-carousel-plugin.js', array( 'jquery' ), null, 'all' );
 
 	} //end function
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_js' );
@@ -685,7 +685,7 @@ Domain Path: /languages
 		wp_enqueue_style( 'slick-theme-css' );
 		wp_enqueue_script( 'slick-js' );
 		wp_enqueue_script( 'match-height-js' );
-		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
+		wp_enqueue_script( 'pegasus-carousel-plugin' );
 
 		return '<section class="center logo-slider slider">' . $output . '</section>';
 
@@ -877,7 +877,7 @@ Domain Path: /languages
 		wp_enqueue_style( 'slick-theme-css' );
 		wp_enqueue_script( 'slick-js' );
 		wp_enqueue_script( 'match-height-js' );
-		wp_enqueue_script( 'pegasus-carousel-plugin-js' );
+		wp_enqueue_script( 'pegasus-carousel-plugin' );
 
 		return '<section role="complementary" class="simple white-back testimonial-slider quotes no-fouc">' . $output . '</section>';
 
