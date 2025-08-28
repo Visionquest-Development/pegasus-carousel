@@ -204,7 +204,7 @@
 
 
 
-	.slick-prev:before, .slick-next:before { color: black !important; }
+	.slick-prev:before, .slick-next:before { color: black; }
 
 
 
@@ -340,31 +340,52 @@
 
 	.sy-box { margin-bottom: 10px; }
 
-	.no-fouc {
-		display: none;
-	}
-
 
 
 	.testimonial-image {
 		height: auto;
 		min-width: 250px;
 		margin: 0 auto;
+		text-align: center;
 	}
 
 	.testimonial-image .post-img-feat {
 		text-align: center;
-		/*height: 100%;
-		width: 100%;*/
+		display: block;
 		margin: 0 auto;
-    aspect-ratio: 16 / 9;
-
+		max-width: 100%;
+		height: auto;
+    width: 100%;
+		/* aspect ratio set via helper classes */
 	}
 
 	.testimonial-image .post-img-feat.circle {
 		border-radius: 50%;
-    aspect-ratio: 4 / 3;
 	}
+
+/* Aspect ratio helpers */
+.testimonial-image .post-img-feat.ratio-16x9 { aspect-ratio: 16 / 9; }
+.testimonial-image .post-img-feat.ratio-4x3 { aspect-ratio: 4 / 3; }
+
+/* Background image mode */
+.testimonial-image .post-img-feat-bg {
+	width: 100%;
+	display: block;
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0 auto;
+	min-height: 250px;
+  aspect-ratio: 1 / 1;
+}
+.testimonial-image .post-img-feat-bg.ratio-16x9 { aspect-ratio: 16 / 9; }
+.testimonial-image .post-img-feat-bg.ratio-4x3 { aspect-ratio: 4 / 3; }
+.testimonial-image .post-img-feat-bg.circle { border-radius: 50%; }
+
+
+/* Circle forces 1:1 square regardless of mode */
+.testimonial-image .post-img-feat.circle { min-height: auto !important; width: 100%; }
+.testimonial-image .post-img-feat-bg.circle { aspect-ratio: 1 / 1; }
 
 	.cite {
 	  text-align: right !important;
