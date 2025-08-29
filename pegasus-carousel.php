@@ -429,6 +429,8 @@ Domain Path: /languages
 			register_post_type('logo_slider',$logo_slider_args);
 
 
+
+
 		} //logo slider cpt check
 
 
@@ -449,6 +451,77 @@ Domain Path: /languages
 		$wp_rewrite->flush_rules(); // !!!
 	}
 
+	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~META BOXES~~~~~~~~~~~~~~~~~~~~~~~~
+	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
+
+	// Add a meta box to the 'logo_slider' post type
+	function logo_slider_meta_box() {
+		add_meta_box(
+			'logo_slider_meta',          // Meta box ID
+			'Logo Slider Details',       // Meta box title
+			'render_logo_slider_meta',   // Callback function
+			'logo_slider',               // Post type
+			'normal',                    // Context
+			'high'                       // Priority
+		);
+	}
+	add_action('add_meta_boxes', 'logo_slider_meta_box');
+
+	// Render the meta box fields
+	function render_logo_slider_meta($post) {
+		// Add a nonce field for security
+		wp_nonce_field('logo_slider_meta_nonce', 'logo_slider_nonce');
+
+		// Get existing values
+		$website_url = get_post_meta($post->ID, '_website_url', true);
+		$alt_text = get_post_meta($post->ID, '_alt_text', true);
+		$caption = get_post_meta($post->ID, '_caption', true);
+
+		?>
+		<p>
+			<label for="website_url">Website URL:</label>
+			<input type="url" id="website_url" name="website_url" value="<?php echo esc_attr($website_url); ?>" size="30" />
+		</p>
+		<p>
+			<label for="alt_text">Alt Text:</label>
+			<input type="text" id="alt_text" name="alt_text" value="<?php echo esc_attr($alt_text); ?>" size="30" />
+		</p>
+		<p>
+			<label for="caption">Caption:</label>
+			<textarea id="caption" name="caption" rows="3" cols="30"><?php echo esc_textarea($caption); ?></textarea>
+		</p>
+		<?php
+	}
+
+	// Save the meta box data
+	function save_logo_slider_meta($post_id) {
+		// Check nonce for security
+		if (!isset($_POST['logo_slider_nonce']) || !wp_verify_nonce($_POST['logo_slider_nonce'], 'logo_slider_meta_nonce')) {
+			return;
+		}
+
+		// Check if user has permission to edit
+		if (!current_user_can('edit_post', $post_id)) {
+			return;
+		}
+
+		// Save Website URL
+		if (isset($_POST['website_url'])) {
+			update_post_meta($post_id, '_website_url', esc_url_raw($_POST['website_url']));
+		}
+
+		// Save Alt Text
+		if (isset($_POST['alt_text'])) {
+			update_post_meta($post_id, '_alt_text', sanitize_text_field($_POST['alt_text']));
+		}
+
+		// Save Caption
+		if (isset($_POST['caption'])) {
+			update_post_meta($post_id, '_caption', sanitize_textarea_field($_POST['caption']));
+		}
+	}
+	add_action('save_post', 'save_logo_slider_meta');
 
 
 	/*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -808,7 +881,7 @@ Domain Path: /languages
 
 				// output all findings - CUSTOMIZE TO YOUR LIKING
 				$output .= "<article class='post-$the_id' >";
-					$output .= "<div class='{$class}'>";
+					$output .= "<div class=' testimonial-content {$class}'>";
 						//var_dump( $img_attr_val );
 						if( $temp_pic ) {
 							// echo '<pre>';
@@ -883,5 +956,4 @@ Domain Path: /languages
 
 	}
 	add_shortcode("testimonial_slider", "testimonial_slider_query_shortcode");
-
 
