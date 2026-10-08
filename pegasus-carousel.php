@@ -305,8 +305,8 @@ Domain Path: /languages
 
 		//wp_enqueue_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
 		//wp_enqueue_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
-		wp_register_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), null, 'all' );
-		wp_register_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), null, 'all' );
+		wp_register_style( 'slick-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick.css', array(), '2.0.1', 'all' );
+		wp_register_style( 'slick-theme-css', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'css/slick-theme.css', array(), '2.0.1', 'all' );
 
 	}
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_styles' );
@@ -319,9 +319,9 @@ Domain Path: /languages
 		//wp_enqueue_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, true );
 		//wp_enqueue_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, true );
 		//wp_enqueue_script( 'pegasus-carousel-plugin-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/plugin.js', array( 'jquery' ), null, true );
-		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), null, 'all' );
-		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), null, 'all' );
-		wp_register_script( 'pegasus-carousel-plugin', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/pegasus-carousel-plugin.js', array( 'jquery' ), null, 'all' );
+		wp_register_script( 'slick-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/slick.js', array( 'jquery' ), '2.0.1', true );
+		wp_register_script( 'match-height-js', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/matchHeight.js', array( 'jquery' ), '0.7.2', true );
+		wp_register_script( 'pegasus-carousel-plugin', trailingslashit( plugin_dir_url( __FILE__ ) ) . 'js/pegasus-carousel-plugin.js', array( 'jquery' ), '1.0.0', true );
 
 	} //end function
 	add_action( 'wp_enqueue_scripts', 'pegasus_carousel_plugin_js' );
